@@ -1,7 +1,6 @@
 from bk_sistem import *
 import os
 
-
 def select_account(user):
     print("\n===== Suas Contas =====")
     for i, account in enumerate(user.accounts, start=1):
@@ -20,35 +19,32 @@ def select_account(user):
         print("Escolha inválida.")
         return None
 
-
 def deposit_user(user):
     value = float(input("Digite o valor que deseja depositar: "))
     transaction = Deposit(value)
     account = select_account(user)
-
+    
     if not account:
         return
-
+    
     user.perform_transaction(account, transaction)
-
 
 def withdraw_user(user):
     value = float(input("Informe o valor que deseja sacar: "))
     transaction = Withdrawal(value)
     account = select_account(user)
-
+    
     if not account:
         return
-
+    
     user.perform_transaction(account, transaction)
-
 
 def account_statement_user(user):
     account = select_account(user)
-
+    
     if not account:
         return
-
+    
     print("\n================ EXTRATO ================")
     transactions = account.historic.transactions
 
@@ -63,7 +59,6 @@ def account_statement_user(user):
     print(f"\nSaldo:\n\t$ {account.balance:.2f}")
     print("==========================================")
 
-
 def new_account_user(user):
     account_id = len(accounts) + 1
     account_type = input("Escolha o tipo de conta (1 para conta corrente): ")
@@ -76,13 +71,11 @@ def new_account_user(user):
     accounts.append(account_user)
     print("\n=== Nova conta criada com sucesso! ===")
 
-
 def list_accounts_user(user):
     print("\n===== Lista de Contas =====")
     for account in user.accounts:
         print(f"Agencia: {account.agency} | Conta: {account.id_account}")
     print("========================")
-
 
 def navegation_account(user):
     while True:
@@ -98,7 +91,7 @@ def navegation_account(user):
 
         elif option == "e":
             account_statement_user(user)
-
+        
         elif option == "nc":
             new_account_user(user)
 
@@ -112,7 +105,6 @@ def navegation_account(user):
         else:
             print("Opção inválida. Tente novamente. \n")
 
-
 def initial_menu():
     print("""
 
@@ -121,14 +113,13 @@ def initial_menu():
         Escolha uma opção:
 
         [1] - Fazer Login
-
+        
         [2] - Criar novo Usuário
 
         [3] - Sair do App
-
+        
         """)
-
-
+    
 def account_menu():
     print("""
             ================ MENU ================
@@ -140,11 +131,9 @@ def account_menu():
             [q] Sair
 
         """)
-
-
+            
 def clear_screen():
     os.system("cls") or None
-
 
 def create_user():
     endereco = input("Digite um endereço: ")
@@ -157,8 +146,8 @@ def create_user():
     new_user = User.create_user(endereco, email, senha, name=nome, birthday=nascimento, cpf=cpf)
     users.append(new_user)
 
-
 def login():
+        
     email = input("Digite seu email: ")
     password = input("Digite sua Senha: ")
     authenticated_user = User.authenticate(email, password)
@@ -170,7 +159,7 @@ def login():
         authenticated_user = User.authenticate(email, password)
 
     navegation_account(authenticated_user)
-
+           
 
 while True:
 
